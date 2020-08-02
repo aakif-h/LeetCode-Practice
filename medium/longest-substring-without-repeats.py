@@ -1,26 +1,10 @@
-class Solution(object):
-    def lengthOfLongestSubstring(self, s):
-        """
-        :type s: str
-        :rtype: int
-        """
-        
-        biggest_count = 0
-        count = 0
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        visitedIndices = [-1 for _ in range(128)]
+        start_index = 0
+        res = 0
         for i in range(len(s)):
-            uniques = []
-            count = 0
-            for j in range(i, len(s)):
-                if s[j] not in uniques:
-                    count += 1
-                    uniques.append(s[j])
-                    if count > biggest_count:
-                        biggest_count = count
-                else:
-                    break
-        
-
-        if count > biggest_count:
-            biggest_count = count
-        
-        return biggest_count
+            start_index = max(visitedIndices[ord(s[i])]+1, start_index)
+            res = max(i - start_index + 1, res)
+            visitedIndices[ord(s[i])] = i
+        return res
