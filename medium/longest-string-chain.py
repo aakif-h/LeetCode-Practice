@@ -5,13 +5,14 @@ class Solution(object):
         :rtype: int
         """
         graph = {}
-        for word in sorted(words, key=len):
+        
+        words.sort(key=len)
+        for word in words:
             l = len(word)
-            costs = [0]
+            max_cost = 0
             for i in range(l):
                 check = word[:i]+word[i+1:]
                 if check in graph:
-                    costs.append(graph[check]) 
-            graph[word] = max(costs)+1
+                    max_cost = graph[check] if graph[check] > max_cost else max_cost 
+            graph[word] = max_cost+1
         return max(graph.values())
-        
